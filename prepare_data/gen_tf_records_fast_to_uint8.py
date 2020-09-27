@@ -53,9 +53,13 @@ def run_encode(file_path, tf_records_filename):
     imgs_path, age_labels, age_vectors = load_file(file_path)
     height, width = 220, 220
     imgs = []
-    writer = tf.python_io.TFRecordWriter(tf_records_filename)
+    writer =tf.compat.v1.python_io.TFRecordWriter(tf_records_filename)
+
     for i in tqdm(range(imgs_path.shape[0])):
         img = extract_image(imgs_path[i], height, width, is_resize=False)
+        # if img == None:
+        #   print(imgs_path[i])
+        #   break
         img = img.tostring()
         age_label = age_labels[i].flatten().tolist()
         age_vector = age_vectors[i].flatten().tolist()
